@@ -13,12 +13,11 @@ public class WordCounter {
 
         String text = ReadFile(filePath).toLowerCase();
 
-        Pattern pattern = Pattern.compile("\\s*(\\s|\\p{Punct}+)\\s*");
+        Pattern pattern = Pattern.compile("\\s*(\\s|[^a-zA-Z0-9])+\\s*");
         String[] words = pattern.split(text);
 
-        for (String word : words) {
-            System.out.println(word);
-        }
+        words = CheckLastEmptyWord(words);
+        words = CheckFirstEmptyWord(words);
 
         Map<String, Integer> dictionary = new HashMap<String, Integer>();
 
@@ -50,5 +49,37 @@ public class WordCounter {
         }
 
         return text;
+    }
+
+    private static String[] CheckLastEmptyWord(String[] words) {
+        if (words.length == 0) {
+            return words;
+        }
+
+        if (words[0] == "") {
+            String[] dest = new String[words.length - 1];
+
+            System.arraycopy(words, 1, dest, 0, dest.length);
+
+            return dest;
+        }
+
+        return words;
+    }
+
+    private static String[] CheckFirstEmptyWord(String[] words) {
+        if (words.length == 0) {
+            return words;
+        }
+
+        if (words[words.length - 1] == "") {
+            String[] dest = new String[words.length - 1];
+
+            System.arraycopy(words, 0, dest, 0, dest.length);
+
+            return dest;
+        }
+
+        return words;
     }
 }
