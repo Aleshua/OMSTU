@@ -11,7 +11,7 @@ public class Main {
         Map<Class, ArrayList<Class>> parentsMap = new HashMap<>();
 
         for (Class myClass : classes) {
-            Class[] parents = FindParentsClasses.Find(null);
+            Class[] parents = FindParentsClasses.Find(myClass);
 
             for (Class parent : parents) {
 
