@@ -22,13 +22,7 @@ public class WordCounter {
         Map<String, Integer> dictionary = new HashMap<String, Integer>();
 
         for (String word : words) {
-
-            if (dictionary.get(word) == null) {
-                dictionary.put(word, 1);
-            } else {
-                dictionary.put(word, dictionary.get(word) + 1);
-            }
-
+            dictionary.put(word, dictionary.getOrDefault(word, 0) + 1);
         }
 
         return dictionary;
