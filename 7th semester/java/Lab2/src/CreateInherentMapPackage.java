@@ -18,21 +18,22 @@ public class CreateInherentMapPackage {
         Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 
         while (files.size() > 0) {
-            String classDefinitionStr = FindClassDefinitionStr(files.removeLast());
+            List<String> classDefinitionStrList = FindClassDefinitionStr(files.removeLast());
 
-            if (classDefinitionStr == null) {
-                continue;
+            for (var str : classDefinitionStrList) {
+                if (str == null) {
+                    continue;
+                }
+
+                String child = GetChildByClassDefinitionStr(str);
+                List<String> parents = GetParentsByClassDefinitionStr(str);
+
+                for (String parent : parents) {
+                    ArrayList<String> list = map.getOrDefault(parent, new ArrayList<String>());
+                    list.add(child);
+                    map.put(parent, list);
+                }
             }
-
-            String child = GetChildByClassDefinitionStr(classDefinitionStr);
-            List<String> parents = GetParentsByClassDefinitionStr(classDefinitionStr);
-
-            for (String parent : parents) {
-                ArrayList<String> list = map.getOrDefault(parent, new ArrayList<String>());
-                list.add(child);
-                map.put(parent, list);
-            }
-
         }
 
         return map;
@@ -78,7 +79,7 @@ public class CreateInherentMapPackage {
         return parents;
     }
 
-    private static String FindClassDefinitionStr(File file) {
+    private static List<String> FindClassDefinitionStr(File file) {
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -92,16 +93,19 @@ public class CreateInherentMapPackage {
             fileReader.close();
 
             Pattern pattern = Pattern
-                    .compile("(class|interface)\\s+[\\w]+\\s+(extends|implements)(\\s|,|\\w|\\{)+");
+                    .compile("(class|interface)\\s+[\\w]+\\s+(extends|implements)(\\s|,|\\w)+\\{");
             Matcher matcher = pattern.matcher(text);
 
+            List<String> strList = new ArrayList<String>();
             String result = "";
             while (matcher.find()) {
                 result = matcher.group();
+                System.out.println(result);
                 result = result.replaceAll("\\s+", " ");
                 result = result.replaceAll("\\{", "");
-                return result.strip();
+                strList.add(result.strip());
             }
+            return strList;
         } catch (IOException e) {
             e.printStackTrace();
         }
