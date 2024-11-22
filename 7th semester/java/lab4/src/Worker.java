@@ -13,13 +13,15 @@ public class Worker implements Runnable {
     private Map<String, ArrayList<String>> map;
     private File file;
     private CountDownLatch countDownLatch;
-    private final ReentrantLock locker = new ReentrantLock();
+    private final ReentrantLock locker;
 
-    public Worker(int id, Map<String, ArrayList<String>> map, File file, CountDownLatch countDownLatch) {
+    public Worker(int id, Map<String, ArrayList<String>> map, File file, CountDownLatch countDownLatch,
+            ReentrantLock locker) {
         this.id = id;
         this.map = map;
         this.file = file;
         this.countDownLatch = countDownLatch;
+        this.locker = locker;
     }
 
     @Override
