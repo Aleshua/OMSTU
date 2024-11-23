@@ -3,17 +3,14 @@ package src;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
 
 public class Worker implements Runnable {
     BlockingQueue<File> fileQueue;
-    BlockingQueue<Pair> pairQueue;
-    CountDownLatch latch;
+    BlockingQueue<List<Pair>> pairQueue;
 
-    public Worker(BlockingQueue<File> fileQueue, BlockingQueue<Pair> pairQueue, CountDownLatch latch) {
+    public Worker(BlockingQueue<File> fileQueue, BlockingQueue<List<Pair>> pairQueue) {
         this.fileQueue = fileQueue;
         this.pairQueue = pairQueue;
-        this.latch = latch;
     }
 
     @Override
@@ -21,19 +18,16 @@ public class Worker implements Runnable {
         try {
             while (true) {
                 File file = fileQueue.take();
+
                 if (file instanceof PoisonPillFile) {
-                    latch.countDown();
                     return;
                 }
 
                 List<Pair> pairs = GetChildAndParentsClassesInFile.Get(file);
 
-                for (var pair : pairs) {
-                    pairQueue.put(pair);
-                }
+                pairQueue.put(pairs);
             }
         } catch (InterruptedException e) {
-            latch.countDown();
             Thread.currentThread().interrupt();
         }
 
