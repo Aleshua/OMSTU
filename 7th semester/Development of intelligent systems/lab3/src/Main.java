@@ -1,34 +1,32 @@
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.stream.Collectors;
 
-import Constants.ElevatorStates;
-import Interfaces.IElevator;
-import Models.Elevator;
-import Models.ElevatorsManager;
+import Elevator.Elevator;
+import Elevator.IElevator;
+import Manager.ElevatorManager;
+import Manager.IElevatorManager;
+import Maps.ElevatorMap;
+import Maps.IElevatorMap;
+import State.IdleState;
 
 public class Main {
         public static void main(String[] args) {
 
-                int floorsNum = 9;
+                int floorsNum = 10;
 
-                List<int[]> calls = Arrays.asList(
+                List<int[]> calls = new ArrayList<>(Arrays.asList(
                                 new int[] { 1, 3 },
                                 new int[] { 2, 4 },
-                                new int[] { 2, 10 });
+                                new int[] { 2, 10 }));
 
-                Queue<Integer> queueCalls = calls.stream()
-                                .flatMapToInt(Arrays::stream)
-                                .boxed()
-                                .collect(Collectors.toCollection(LinkedList::new));
+                IElevatorMap elevatorMap = new ElevatorMap(floorsNum);
 
-                IElevator elevatorFirst = new Elevator(1, ElevatorStates.Idle, 1);
-                IElevator elevatorSecond = new Elevator(2, ElevatorStates.Idle, 3);
+                IElevator elevatorFirst = new Elevator(1, new IdleState(), 1, elevatorMap);
+                IElevator elevatorSecond = new Elevator(2, new IdleState(), 3, elevatorMap);
 
-                ElevatorsManager manager = new ElevatorsManager(floorsNum, elevatorFirst, elevatorSecond);
+                IElevatorManager manager = new ElevatorManager(elevatorMap, elevatorFirst, elevatorSecond);
 
-                manager.Run(queueCalls);
+                manager.Run(calls);
         }
 }

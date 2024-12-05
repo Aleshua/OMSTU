@@ -3,52 +3,55 @@ package Maps;
 import java.util.HashMap;
 import java.util.Map;
 
-import Actions.CloseDoorAction;
-import Actions.ErrorAction;
-import Actions.GoDownAction;
-import Actions.GoUpAction;
-import Actions.IdleAction;
-import Actions.OpenDoorAction;
-import Constants.ElevatorCommands;
-import Constants.ElevatorStates;
-import Interfaces.IAction;
+import State.CloseDoorState;
+import State.ErrorState;
+import State.GoDownState;
+import State.GoUpState;
+import State.IState;
+import State.IdleState;
+import State.OpenDoorState;
 
-public class ElevatorMap {
-        public static Map<Integer, Map<ElevatorCommands, IAction>> Create(int floorsNum) {
+public class ElevatorMap implements IElevatorMap {
 
-                Map<ElevatorStates, IAction> actionsMap = Map.of(
-                                ElevatorStates.Idle, new IdleAction(),
-                                ElevatorStates.CloseDoor, new CloseDoorAction(),
-                                ElevatorStates.OpenDoor, new OpenDoorAction(),
-                                ElevatorStates.GoDown, new GoDownAction(),
-                                ElevatorStates.GoUp, new GoUpAction(),
-                                ElevatorStates.Error, new ErrorAction());
+        @SuppressWarnings("rawtypes")
+        Map<Class, IState> statesMap = Map.of(
+                        IdleState.class, new IdleState(),
+                        CloseDoorState.class, new CloseDoorState(),
+                        OpenDoorState.class, new OpenDoorState(),
+                        GoDownState.class, new GoDownState(),
+                        GoUpState.class, new GoUpState(),
+                        ErrorState.class, new ErrorState());
 
-                Map<Integer, Map<ElevatorCommands, IAction>> map = new HashMap<>();
+        @SuppressWarnings("rawtypes")
+        Map<Integer, Map<Class, IState>> map;
+
+        public ElevatorMap(int floorsNum) {
+                map = new HashMap<>();
 
                 map.put(1, Map.of(
-                                ElevatorCommands.GoIdle, actionsMap.get(ElevatorStates.Idle),
-                                ElevatorCommands.CloseDoor, actionsMap.get(ElevatorStates.CloseDoor),
-                                ElevatorCommands.OpenDoor, actionsMap.get(ElevatorStates.OpenDoor),
-                                ElevatorCommands.GoDown, actionsMap.get(ElevatorStates.Error),
-                                ElevatorCommands.GoUp, actionsMap.get(ElevatorStates.GoUp)));
-
-                for (int i = 2; i <= floorsNum - 1; i++) {
-                        map.put(i, Map.of(
-                                        ElevatorCommands.GoIdle, actionsMap.get(ElevatorStates.Idle),
-                                        ElevatorCommands.CloseDoor, actionsMap.get(ElevatorStates.CloseDoor),
-                                        ElevatorCommands.OpenDoor, actionsMap.get(ElevatorStates.OpenDoor),
-                                        ElevatorCommands.GoDown, actionsMap.get(ElevatorStates.GoDown),
-                                        ElevatorCommands.GoUp, actionsMap.get(ElevatorStates.GoUp)));
-                }
+                                IdleState.class, statesMap.get(IdleState.class),
+                                CloseDoorState.class, statesMap.get(CloseDoorState.class),
+                                OpenDoorState.class, statesMap.get(OpenDoorState.class),
+                                GoDownState.class, statesMap.get(ErrorState.class),
+                                GoUpState.class, statesMap.get(GoUpState.class)));
 
                 map.put(floorsNum, Map.of(
-                                ElevatorCommands.GoIdle, actionsMap.get(ElevatorStates.Idle),
-                                ElevatorCommands.CloseDoor, actionsMap.get(ElevatorStates.CloseDoor),
-                                ElevatorCommands.OpenDoor, actionsMap.get(ElevatorStates.OpenDoor),
-                                ElevatorCommands.GoDown, actionsMap.get(ElevatorStates.GoDown),
-                                ElevatorCommands.GoUp, actionsMap.get(ElevatorStates.Error)));
+                                IdleState.class, statesMap.get(IdleState.class),
+                                CloseDoorState.class, statesMap.get(CloseDoorState.class),
+                                OpenDoorState.class, statesMap.get(OpenDoorState.class),
+                                GoDownState.class, statesMap.get(GoDownState.class),
+                                GoUpState.class, statesMap.get(ErrorState.class)));
+        }
 
-                return map;
+        public IState GetVerifiedState(int currentFloor, IState currentState) {
+
+                IState nextState = map.getOrDefault(currentFloor, Map.of(
+                                IdleState.class, statesMap.get(IdleState.class),
+                                CloseDoorState.class, statesMap.get(CloseDoorState.class),
+                                OpenDoorState.class, statesMap.get(OpenDoorState.class),
+                                GoDownState.class, statesMap.get(GoDownState.class),
+                                GoUpState.class, statesMap.get(GoUpState.class))).get(currentState.getClass());
+
+                return nextState;
         }
 }

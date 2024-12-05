@@ -1,6 +1,6 @@
-package Interfaces;
+package Elevator;
 
-import Constants.ElevatorStates;
+import State.IState;
 
 public interface IElevator {
 
@@ -12,13 +12,15 @@ public interface IElevator {
 
     public void NextTargetFloor();
 
+    public IState GetCurrentState();
+
+    public void SetCurrentState(IState newState);
+
+    public IState Next();
+
     public void AddFloorInQueue(Integer target);
 
     public void ClearQueue();
-
-    public ElevatorStates CurrentState();
-
-    public void Next(ElevatorStates state);
 
     public void CloseDoor();
 
