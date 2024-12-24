@@ -1,0 +1,140 @@
+{
+    "0": {
+        "program": 1,
+        "STATEMENTS": 2,
+        "STATEMENT": 3,
+        "EMPTY": 4,
+        "FUNC_EXPRESSION": 5,
+        "VAR_EXPRESSION": 6,
+        "RETURN_EXPRESSION": 7,
+        "EXPRESSION": 8,
+        "TERM": 13,
+        "FACTOR": 14
+    },
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {},
+    "7": {},
+    "8": {},
+    "9": {},
+    "10": {},
+    "11": {},
+    "12": {
+        "EXPRESSION": 26,
+        "TERM": 13,
+        "FACTOR": 14
+    },
+    "13": {},
+    "14": {},
+    "15": {},
+    "16": {},
+    "17": {},
+    "18": {
+        "STATEMENT": 3,
+        "STATEMENTS": 35,
+        "EMPTY": 4,
+        "FUNC_EXPRESSION": 5,
+        "VAR_EXPRESSION": 6,
+        "RETURN_EXPRESSION": 7,
+        "EXPRESSION": 8,
+        "TERM": 13,
+        "FACTOR": 14
+    },
+    "19": {
+        "TERM": 36,
+        "FACTOR": 14
+    },
+    "20": {
+        "TERM": 37,
+        "FACTOR": 14
+    },
+    "21": {
+        "TERM": 38,
+        "FACTOR": 14
+    },
+    "22": {
+        "TERM": 39,
+        "FACTOR": 14
+    },
+    "23": {},
+    "24": {
+        "PARAMS": 42,
+        "EMPTY": 43
+    },
+    "25": {},
+    "26": {},
+    "27": {
+        "FACTOR": 45
+    },
+    "28": {
+        "FACTOR": 46
+    },
+    "29": {
+        "FACTOR": 47
+    },
+    "30": {
+        "FACTOR": 48
+    },
+    "31": {
+        "FACTOR": 49
+    },
+    "32": {
+        "FACTOR": 50
+    },
+    "33": {
+        "FACTOR": 51
+    },
+    "34": {
+        "FACTOR": 52
+    },
+    "35": {},
+    "36": {},
+    "37": {},
+    "38": {},
+    "39": {},
+    "40": {
+        "PARAMS": 53,
+        "EMPTY": 43
+    },
+    "41": {},
+    "42": {},
+    "43": {},
+    "44": {
+        "EXPRESSION": 56,
+        "TERM": 13,
+        "FACTOR": 14
+    },
+    "45": {},
+    "46": {},
+    "47": {},
+    "48": {},
+    "49": {},
+    "50": {},
+    "51": {},
+    "52": {},
+    "53": {},
+    "54": {
+        "PARAMS": 58,
+        "EMPTY": 43
+    },
+    "55": {},
+    "56": {},
+    "57": {},
+    "58": {},
+    "59": {
+        "STATEMENTS": 60,
+        "STATEMENT": 3,
+        "EMPTY": 4,
+        "FUNC_EXPRESSION": 5,
+        "VAR_EXPRESSION": 6,
+        "RETURN_EXPRESSION": 7,
+        "EXPRESSION": 8,
+        "TERM": 13,
+        "FACTOR": 14
+    },
+    "60": {},
+    "61": {}
+}
